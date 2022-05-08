@@ -3,11 +3,11 @@ from microbit import *
 
 class Pong:
 
-    def __init__(self):
-        self.ball = (3, 2)
+    def __init__(self):-
+        self.ball = (1, 2)
         self.direction = (1, 1)
         self.plateX = 1
-        self.vit = 1
+        self.vit = 1.0
 
     def display_pong(self):
         display.clear()
@@ -37,10 +37,25 @@ class Pong:
             self.ball[1] + self.direction[1]
         )
 
+    def check_plate(self):
+        if self.ball[1] < 3 or self.direction[1] == 1:
+            return True
+
+        self.vit += 1
+        if self.ball[0] >= self.plateX and self.ball[0] <= (self.plateX + 1):
+            return True
+
+        return False
+
 game = Pong()
 
 while True:
     game.update_ball()
     game.update_plate()
+
+    if not game.check_plate():
+        display.scroll("X")
+        break
+
     game.display_pong()
     sleep(300 / game.vit)
